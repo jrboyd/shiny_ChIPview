@@ -41,6 +41,7 @@ server_scatter_plot = function(input, output, session,
     showHelp = input$CheckShowHelpers
     if(is.null(showHelp)) showHelp = FALSE
     fixCoords = input$CheckFixCoords
+    if(is.null(fixCoords)) fixCoords = FALSE
     save(plotted_dt, showHelp, ptype, x_variable, y_variable, file = "last_plot.save")
     if(ptype == "standard"){
       plotted_dt[, max(xval, yval)]
@@ -48,13 +49,13 @@ server_scatter_plot = function(input, output, session,
       if(is.null(plotted_dt$plotting_group)){
           p = ggplot(plotted_dt) + 
               geom_point(aes(x = xval, y = yval)) +
-              labs(x = x_variable, y = y_variable, title = "Select Points Here") +
-              ylim(lim) + xlim(lim)
+              labs(x = x_variable, y = y_variable, title = "Select Points Here")# +
+              # ylim(lim) + xlim(lim)
       }else{
           p = ggplot(plotted_dt) + 
               geom_point(aes(x = xval, y = yval, col = plotting_group)) +
-              labs(x = x_variable, y = y_variable, title = "Select Points Here") +
-              ylim(lim) + xlim(lim)
+              labs(x = x_variable, y = y_variable, title = "Select Points Here")# +
+              # ylim(lim) + xlim(lim)
       }
       
       if(fixCoords) p = p + coord_fixed()
@@ -79,14 +80,14 @@ server_scatter_plot = function(input, output, session,
           p = ggplot(plotted_dt) + 
               geom_point(aes(x = xvolcano, y = yvolcano)) +
               labs(x = paste("log2 fold-change of", y_variable, "over", x_variable), 
-                   y = paste("log2 min of", y_variable, "and", x_variable), title = "Select Points Here") +
-              xlim(lim) 
+                   y = paste("log2 min of", y_variable, "and", x_variable), title = "Select Points Here")# +
+              # xlim(lim) 
       }else{
           p = ggplot(plotted_dt) + 
               geom_point(aes(x = xvolcano, y = yvolcano, col = plotting_group)) +
               labs(x = paste("log2 fold-change of", y_variable, "over", x_variable), 
-                   y = paste("log2 min of", y_variable, "and", x_variable), title = "Select Points Here") +
-              xlim(lim)
+                   y = paste("log2 min of", y_variable, "and", x_variable), title = "Select Points Here") #+
+              # xlim(lim)
       }
       
       if(fixCoords) p = p + coord_fixed()
